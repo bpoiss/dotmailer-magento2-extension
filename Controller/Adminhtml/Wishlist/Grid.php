@@ -13,9 +13,4 @@ class Grid extends Index
     {
         return $this;
     }
-
-	public function execute()
-	{
-
-	}
 }

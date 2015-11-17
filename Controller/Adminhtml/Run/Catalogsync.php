@@ -5,14 +5,11 @@ namespace Dotdigitalgroup\Email\Controller\Adminhtml\Run;
 class Catalogsync extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
-	protected $_catalogFactory;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\Sync\CatalogFactory $catalogFactory,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_catalogFactory = $catalogFactory;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -23,8 +20,7 @@ class Catalogsync extends \Magento\Backend\App\AbstractAction
 	 */
 	public function execute()
 	{
-		$result = $this->_catalogFactory->create()
-			->sync();
+		$result = $this->_objectManager->create('Dotdigitalgroup\Email\Model\Sync\Catalog')->sync();
 
 		$this->messageManager->addSuccess($result['message']);
 

@@ -1,5 +1,4 @@
 <?php
-
 namespace Dotdigitalgroup\Email\Model\Newsletter;
 
 class Sub extends \Magento\Newsletter\Model\Subscriber
@@ -18,7 +17,7 @@ class Sub extends \Magento\Newsletter\Model\Subscriber
 		\Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
 		\Magento\Customer\Api\AccountManagementInterface $customerAccountManagement,
 		\Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
-		\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+		\Magento\Framework\Model\Resource\AbstractResource $resource = null,
 		\Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
 		array $data = []
 	)

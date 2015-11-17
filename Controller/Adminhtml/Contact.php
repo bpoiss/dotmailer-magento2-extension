@@ -1,6 +1,8 @@
 <?php
 namespace Dotdigitalgroup\Email\Controller\Adminhtml;
 
+//use Magento\Backend\App\Action;
+//use Magento\Framework\Controller\ResultFactory;
 
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
@@ -47,8 +49,8 @@ class Contact extends \Magento\Backend\App\Action
 	/**
 	 * @return bool
 	 */
-	protected function _isAllowed()
-	{
-		return $this->_authorization->isAllowed('Dotdigitalgroup_Email::contact');
-	}
+	//protected function _isAllowed()
+//	{
+//		return $this->_authorization->isAllowed('Dotdigitalgroup_Email::contact');
+//	}
 }

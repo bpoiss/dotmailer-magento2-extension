@@ -13,8 +13,9 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 
 
 	protected $_gridFactory;
+	protected $_objectManager;
 	protected $_quoteFactory;
-	protected $_importedFactory;
+
 	/**
 	 * @param \Magento\Backend\Block\Template\Context $context
 	 * @param \Magento\Backend\Helper\Data $backendHelper
@@ -24,15 +25,15 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
 	 */
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\Adminhtml\Source\Contact\ImportedFactory $importedFactory,
 		\Magento\Backend\Block\Template\Context $context,
 		\Magento\Backend\Helper\Data $backendHelper,
 		\Dotdigitalgroup\Email\Model\Resource\Quote\CollectionFactory $gridFactory,
 		\Magento\Framework\Module\Manager $moduleManager,
+		\Magento\Framework\ObjectManagerInterface $objectManagerInterface,
 		array $data = []
 	) {
-		$this->_importedFactory = $importedFactory;
 		$this->_quoteFactory = $gridFactory;
+		$this->_objectManager = $objectManagerInterface;
 		$this->moduleManager = $moduleManager;
 		parent::__construct($context, $backendHelper, $data);
 	}
@@ -53,14 +54,17 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 	 */
 	protected function _prepareCollection()
 	{
-		$this->setCollection($this->_quoteFactory->create());
+		$collection = $this->_quoteFactory->create();
+		$this->setCollection($collection);
 
-		return parent::_prepareCollection();
+		parent::_prepareCollection();
+		return $this;
 	}
 
 	/**
+	 * Prepare the grid collumns.
 	 * @return $this
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	protected function _prepareColumns()
 	{
@@ -93,7 +97,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 			'type'          => 'options',
 			'escape'        => true,
 			'renderer'		=> 'Dotdigitalgroup\Email\Block\Adminhtml\Column\Renderer\Imported',
-			'options'       => $this->_importedFactory->create()->getOptions(),
+			'options'       => $this->_objectManager->create('Dotdigitalgroup\Email\Model\Adminhtml\Source\Contact\Imported')->getOptions(),
 			'filter_condition_callback' => array($this, 'filterCallbackContact')
 		))->addColumn('modified', array(
 			'header'        => __('Quote Modified'),
@@ -103,7 +107,7 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 			'type'          => 'options',
 			'escape'        => true,
 			'renderer'		=> 'Dotdigitalgroup\Email\Block\Adminhtml\Column\Renderer\Imported',
-			'options'       => $this->_importedFactory->create()->getOptions(),
+			'options'       => $this->_objectManager->create('Dotdigitalgroup\Email\Model\Adminhtml\Source\Contact\Imported')->getOptions(),
 			'filter_condition_callback' => array($this, 'filterCallbackContact')
 		))->addColumn('created_at', array(
 			'header'        => __('Created At'),
@@ -159,6 +163,14 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 
 
 		return $this;
+	}
+
+	public function getRowUrl($row)
+	{
+		return $this->getUrl(
+			'dotdigitalgroup_email/*/edit',
+			['email_quote_id' => $row->getId()]
+		);
 	}
 
 }

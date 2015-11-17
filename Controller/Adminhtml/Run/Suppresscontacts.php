@@ -5,14 +5,11 @@ namespace Dotdigitalgroup\Email\Controller\Adminhtml\Run;
 class Suppresscontacts extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
-	protected $_subscriberFactory;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\Newsletter\SubscriberFactory $subscriberFactory,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_subscriberFactory = $subscriberFactory;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -22,7 +19,7 @@ class Suppresscontacts extends \Magento\Backend\App\AbstractAction
 	 */
 	public function execute()
 	{
-		$this->_subscriberFactory->create()
+		$this->_objectManager->create('Dotdigitalgroup\Email\Model\Newsletter\Subscriber')
 		    ->unsubscribe(true);
 		$this->messageManager->addSuccess('Done.');
 

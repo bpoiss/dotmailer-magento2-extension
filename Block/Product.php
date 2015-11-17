@@ -8,16 +8,9 @@ class Product extends \Magento\Framework\View\Element\Template
 	public $priceHelper;
 	public $scopeManager;
 	public $objectManager;
-	protected $_orderFactory;
-	protected $_emulationFactory;
-	protected $_recommendedFactory;
-	protected $_recommended;
+
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Helper\Recommended $recommended,
-		//\Dotdigitalgroup\Email\Model\Dynamic\RecommendedFactory $recommendedFactory,
-		\Magento\Store\Model\App\EmulationFactory $emulationFactory,
-		\Magento\Sales\Model\OrderFactory $orderFactory,
 		\Dotdigitalgroup\Email\Helper\Data $helper,
 		\Magento\Framework\Pricing\Helper\Data $priceHelper,
 		\Magento\Framework\View\Element\Template\Context $context,
@@ -27,9 +20,6 @@ class Product extends \Magento\Framework\View\Element\Template
 	)
 	{
 		parent::__construct( $context, $data );
-		$this->_recommended = $recommended;
-		$this->_emulationFactory = $emulationFactory;
-		$this->_orderFactory = $orderFactory;
 		$this->helper = $helper;
 		$this->priceHelper = $priceHelper;
 		$this->scopeManager = $scopeConfig;
@@ -44,13 +34,11 @@ class Product extends \Magento\Framework\View\Element\Template
         $productsToDisplay = array();
         $orderId = $this->getRequest()->getParam('order', false);
         $mode  = $this->getRequest()->getParam('mode', false);
-        //@todo test the dynamic recomendation for missing file
-	    if ($orderId && $mode) {
-            $orderModel = $this->_orderFactory->create()
-	            ->load($orderId);
+        if ($orderId && $mode) {
+            $orderModel = $this->objectManager->create('Magento\Sales\Model\Order')->load($orderId);
             if ($orderModel->getId()) {
 	            $storeId = $orderModel->getStoreId();
-	            $appEmulation = $this->_emulationFactory->create();
+	            $appEmulation = $this->objectManager->create('Magento\Store\Model\App\Emulation');
 	            $appEmulation->startEnvironmentEmulation($storeId);
                 //order products
                 $recommended = $this->objectManager->create('Dotdigitalgroup\Email\Model\Dynamic\Recommended');
@@ -86,6 +74,6 @@ class Product extends \Magento\Framework\View\Element\Template
 	 */
     public function getDisplayType()
     {
-        return $this->_recommended->getDisplayType();
+        return $this->objectManager->create('Dotdigitalgroup\Email\Helper\Recommended')->getDisplayType();
     }
 }

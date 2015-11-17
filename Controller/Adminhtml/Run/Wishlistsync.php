@@ -5,14 +5,11 @@ namespace Dotdigitalgroup\Email\Controller\Adminhtml\Run;
 class Wishlistsync extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
-	protected $_wishlistFactory;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\Sync\WishlistFactory $wishlistFactory,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_wishlistFactory = $wishlistFactory;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -23,8 +20,7 @@ class Wishlistsync extends \Magento\Backend\App\AbstractAction
 	 */
 	public function execute()
 	{
-		$result = $this->_wishlistFactory->create()
-			->sync();
+		$result = $this->_objectManager->create('Dotdigitalgroup\Email\Model\Sync\Wishlist')->sync();
 
 		$this->messageManager->addSuccess($result['message']);
 

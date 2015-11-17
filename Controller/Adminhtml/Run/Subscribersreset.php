@@ -5,14 +5,11 @@ namespace Dotdigitalgroup\Email\Controller\Adminhtml\Run;
 class Subscribersreset extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
-	protected $_contactFactory;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\Resource\ContactFactory $contactFactory,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_contactFactory = $contactFactory;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -23,8 +20,7 @@ class Subscribersreset extends \Magento\Backend\App\AbstractAction
 	 */
 	public function execute()
 	{
-		$this->_contactFactory->create()
-			->resetSubscribers();
+		$this->_objectManager->create('Dotdigitalgroup\Email\Model\Resource\Contact')->resetSubscribers();
 
 		$this->messageManager->addSuccess(__('Done.'));
 

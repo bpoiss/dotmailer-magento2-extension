@@ -18,23 +18,16 @@ class Edit extends \Magento\Backend\App\Action
 	 */
 	protected $resultPageFactory;
 
-	protected $_contactFactory;
-	protected $_sessionFactory;
-
 	/**
 	 * @param Action\Context $context
 	 * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
 	 * @param \Magento\Framework\Registry $registry
 	 */
 	public function __construct(
-		\Magento\Backend\Model\SessionFactory $sessionFactory,
-		\Dotdigitalgroup\Email\Model\ContactFactory $contactFactory,
 		Action\Context $context,
 		\Magento\Framework\View\Result\PageFactory $resultPageFactory,
 		\Magento\Framework\Registry $registry
 	) {
-		$this->_sessionFactory = $sessionFactory;
-		$this->_contactFactory = $contactFactory;
 		$this->resultPageFactory = $resultPageFactory;
 		$this->_coreRegistry = $registry;
 		parent::__construct($context);
@@ -59,23 +52,24 @@ class Edit extends \Magento\Backend\App\Action
 		/** @var \Magento\Backend\Model\View\Result\Page $resultPage */
 		$resultPage = $this->resultPageFactory->create();
 		$resultPage->setActiveMenu('Dotdigitalgroup_Email::contact')
-           ->addBreadcrumb(__('Contact'), __('Contact'))
-           ->addBreadcrumb(__('Reports'), __('Reports'));
+		           ->addBreadcrumb(__('Contact'), __('Contact'))
+		           ->addBreadcrumb(__('Reports'), __('Reports'));
 		return $resultPage;
 	}
 
 	/**
+	 * Edit Blog post
 	 *
 	 * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
 	public function execute()
 	{
+		return $this->_redirect('dotdigitalgroup/*/*');
 		$id = $this->getRequest()->getParam('email_contact_id');
-		$model = $this->_contactFactory->create();
-		//check the param contact id
+		$model = $this->_objectManager->create('Dotdigitalgroup\Email\Model\Contact');
+
 		if ($id) {
-			//load the and check the contact model
 			$model->load($id);
 			if (!$model->getId()) {
 				$this->messageManager->addError(__('This contact no longer exists.'));
@@ -86,8 +80,7 @@ class Edit extends \Magento\Backend\App\Action
 			}
 		}
 
-		$data = $this->_sessionFactory->create()
-			->getFormData(true);
+		$data = $this->_objectManager->get('Magento\Backend\Model\Session')->getFormData(true);
 		if (!empty($data)) {
 			$model->setData($data);
 		}

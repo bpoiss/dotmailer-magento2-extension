@@ -6,15 +6,10 @@ class Wishlistsreset extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
 
-	protected $_wishlistFactory;
-
-
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\Resource\WishlistFactory $wishlistFactory,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_wishlistFactory = $wishlistFactory;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -26,8 +21,7 @@ class Wishlistsreset extends \Magento\Backend\App\AbstractAction
 	public function execute()
 	{
 
-		$this->_wishlistFactory->create()
-			->resetWishlists();
+		$this->_objectManager->create('Dotdigitalgroup\Email\Model\Resource\Wishlist')->resetWishlists();
 
 		$this->messageManager->addSuccess(__('Done.'));
 

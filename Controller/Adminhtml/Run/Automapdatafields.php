@@ -8,13 +8,12 @@ class Automapdatafields extends \Magento\Backend\App\AbstractAction
 	protected $_data;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Helper\Data $data,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_data = $data;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
+		$this->_data = $this->_objectManager->create('Dotdigitalgroup\Email\Helper\Data');
 
 	}
 	public function execute()

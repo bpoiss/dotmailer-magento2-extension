@@ -126,7 +126,6 @@ class Observer
                                 ->setProgramId( $programId );
                             $automation->save();
                         }catch(\Exception $e){
-	                        throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
                         }
                     }
                 }
@@ -184,7 +183,7 @@ class Observer
                 ->setProgramId( $programId )
                 ->save();
         }catch(\Exception $e){
-	        throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
+	        $this->_helper->debug((string)$e, array());
         }
 
         return $this;
@@ -215,7 +214,7 @@ class Observer
             $emailOrder->setEmailImported(\Dotdigitalgroup\Email\Model\Contact::EMAIL_CONTACT_NOT_IMPORTED)
 	            ->save();
         }catch (\Exception $e){
-	        throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
+	        $this->_helper->debug((string)$e, array());
 
         }
 
@@ -256,6 +255,8 @@ class Observer
     public function handleQuoteToOrder( $observer)
     {
 	    try {
+
+
 		    $order       = $observer->getOrder();
 		    $websiteId   = $order->getStore()->getWebsiteId();
 		    $apiEnabled  = $this->_helper->isEnabled( $websiteId );
@@ -279,7 +280,7 @@ class Observer
 			    }
 		    }
 	    }catch(\Exception $e){
-		    throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
+		    $this->_helper->debug((string)$e, array());
 	    }
         return $this;
     }
@@ -336,7 +337,7 @@ class Observer
                 ->setStoreId($quote->getStoreId())
                 ->save();
         }catch (\Exception $e){
-	        throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
+	        $this->_helper->debug((string)$e, array());
 
         }
     }

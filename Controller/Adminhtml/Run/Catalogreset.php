@@ -5,14 +5,11 @@ namespace Dotdigitalgroup\Email\Controller\Adminhtml\Run;
 class Catalogreset extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
-	protected $_catalogFactory;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\Resource\CatalogFactory $catalogFactory,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_catalogFacotry = $catalogFactory;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -24,8 +21,7 @@ class Catalogreset extends \Magento\Backend\App\AbstractAction
 	public function execute()
 	{
 
-		$this->_catalogFacotry->create()
-			->resetCatalog();
+		$this->_objectManager->create('Dotdigitalgroup\Email\Model\Resource\Catalog')->resetCatalog();
 
 		$this->messageManager->addSuccess(__('Done.'));
 

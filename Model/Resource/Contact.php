@@ -3,7 +3,7 @@
 namespace Dotdigitalgroup\Email\Model\Resource;
 
 
-class Contact extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Contact extends \Magento\Framework\Model\Resource\Db\AbstractDb
 {
 	/**
 	 * Initialize resource
@@ -19,7 +19,7 @@ class Contact extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	/**
 	 * Remove all contact_id from the table.
 	 * @return int
-	 * @throws \Magento\Framework\Exception\LocalizedException
+	 *
 	 */
 	public function deleteContactIds()
 	{
@@ -31,7 +31,6 @@ class Contact extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 				$conn->quoteInto('contact_id is ?', new \Zend_Db_Expr('not null'))
 			);
 		}catch (\Exception $e){
-			throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
 
 		}
 		return $num;
@@ -39,9 +38,8 @@ class Contact extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
 
 	/**
-	 * Reset the imported contacts.
+	 * Reset the imported contacts
 	 * @return int
-	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
 	public function resetAllContacts()
 	{
@@ -52,17 +50,14 @@ class Contact extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 				$conn->quoteInto('email_imported is ?', new \Zend_Db_Expr('not null'))
 			);
 		}catch (\Exception $e){
-			throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
 		}
 
 		return $num;
 	}
-
 	/**
 	 * Set all imported subscribers for reimport.
 	 *
 	 * @return int
-	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
 	public function resetSubscribers() {
 
@@ -75,7 +70,6 @@ class Contact extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 				$conn->quoteInto('subscriber_imported is ?', new \Zend_Db_Expr('not null')));
 
 		} catch ( \Exception $e ) {
-			throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
 		}
 
 		return $num;

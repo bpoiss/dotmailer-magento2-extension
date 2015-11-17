@@ -180,13 +180,11 @@ class Observer
 
 	/**
 	 * Add segment ids.
-	 *
 	 * @param $customerId
 	 * @param $segmentIds
 	 * @param $websiteId
 	 *
 	 * @return $this
-	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
 	protected function addContactsFromWebsiteSegments($customerId, $segmentIds, $websiteId){
 
@@ -205,7 +203,7 @@ class Observer
 			        ->save();
 
 		}catch (\Exception $e){
-			throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
+
 		}
 
 		return $this;

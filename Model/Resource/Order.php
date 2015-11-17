@@ -7,7 +7,7 @@ use Magento\Framework\Stdlib\DateTime as LibDateTime;
 use Magento\Store\Model\Store;
 use Magento\Catalog\Model\Product;
 
-class Order extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Order extends \Magento\Framework\Model\Resource\Db\AbstractDb
 {
 	/**
 	 * Initialize resource
@@ -24,7 +24,6 @@ class Order extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	 * Reset the email order for reimport.
 	 *
 	 * @return int
-	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
 	public function resetOrders()
 	{
@@ -35,7 +34,6 @@ class Order extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 				$conn->quoteInto('email_imported is ?', new \Zend_Db_Expr('not null'))
 			);
 		}catch (\Exception $e){
-			throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
 		}
 
 		return $num;

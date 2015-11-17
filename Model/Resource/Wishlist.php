@@ -4,7 +4,7 @@ namespace Dotdigitalgroup\Email\Model\Resource;
 
 use Magento\Framework\Stdlib\DateTime as LibDateTime;
 
-class Wishlist extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Wishlist extends \Magento\Framework\Model\Resource\Db\AbstractDb
 {
 	/**
 	 * Initialize resource
@@ -20,7 +20,6 @@ class Wishlist extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	 * Reset the email reviews for reimport.
 	 *
 	 * @return int
-	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
 	public function resetWishlists()
 	{
@@ -30,7 +29,6 @@ class Wishlist extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 				array('wishlist_imported' => new \Zend_Db_Expr('null'), 'wishlist_modified' => new \Zend_Db_Expr('null'))
 			);
 		}catch (\Exception $e){
-			throw new \Magento\Framework\Exception\LocalizedException(__($e->getMessage()));
 		}
 
 		return $num;

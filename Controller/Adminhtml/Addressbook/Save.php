@@ -5,14 +5,13 @@ namespace Dotdigitalgroup\Email\Controller\Adminhtml\Addressbook;
 class Save extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
-	protected $_helperData;
+	protected $_helper;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Helper\Data $data,
 		\Magento\Backend\App\Action\Context $context
+
 	)
 	{
-		$this->_helperData = $data;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -23,7 +22,7 @@ class Save extends \Magento\Backend\App\AbstractAction
 		$visibility = $this->getRequest()->getParam('visibility');
 		$website  = $this->getRequest()->getParam('website', 0);
 
-		$client = $this->_helperData->getWebsiteApiClient($website);
+		$client = $this->_objectManager->create('Dotdigitalgroup\Email\Helper\Data')->getWebsiteApiClient($website);
 		if (strlen($addressBookName)) {
 			$response = $client->postAddressBooks($addressBookName, $visibility);
 			if (isset($response->message))

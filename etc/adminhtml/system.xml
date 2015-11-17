@@ -279,10 +279,6 @@
                     <!--<label>Segments</label>-->
                     <!--<source_model>Dotdigitalgroup\Email\Model\Config\Source\Datamapping\Datafields</source_model>-->
                 <!--</field>-->
-                <!--<field id="validator" translate="label" sortOrder="80" showInStore="1" showInWebsite="1" showInDefault="1">-->
-                    <!--<label></label>-->
-                    <!--<frontend_model>Dotdigitalgroup\Email\Block\Adminhtml\System\Enterprisevalidator</frontend_model>-->
-                <!--</field>-->
             <!--</group>-->
             <group id="dynamic_datafield" translate="comment label" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Create Datafield</label>
@@ -1251,7 +1247,7 @@
                     <source_model>Magento\Config\Model\Config\Source\Enabledisable</source_model>
                 </field>
                 <field id="api_log_time" translate="comment label" sortOrder="20" showInStore="1" showInWebsite="1" showInDefault="1">
-                    <label>Debug Api Calls Time</label>
+                    <label>Debug Api calls time</label>
                     <comment>Set the number in seconds that api calls greater will be logged.</comment>
                 </field>
             </group>

@@ -34,7 +34,7 @@ class Automation
 
 	public function __construct(
 		\Dotdigitalgroup\Email\Model\Resource\Automation\CollectionFactory $automationFactory,
-		\Magento\Framework\App\ResourceConnection $resource,
+		\Magento\Framework\App\Resource $resource,
 		\Dotdigitalgroup\Email\Helper\Data $helper,
 		\Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
 		\Magento\Store\Model\StoreManagerInterface $storeManagerInterface,

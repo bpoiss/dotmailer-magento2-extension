@@ -5,14 +5,11 @@ namespace Dotdigitalgroup\Email\Controller\Adminhtml\Run;
 class Reviewsync extends \Magento\Backend\App\AbstractAction
 {
 	protected $messageManager;
-	protected $_cronFactory;
 
 	public function __construct(
-		\Dotdigitalgroup\Email\Model\CronFactory $cronFactory,
 		\Magento\Backend\App\Action\Context $context
 	)
 	{
-		$this->_cronFactory = $cronFactory;
 		$this->messageManager = $context->getMessageManager();
 		parent::__construct($context);
 
@@ -23,8 +20,7 @@ class Reviewsync extends \Magento\Backend\App\AbstractAction
 	 */
 	public function execute()
 	{
-		$result = $this->_cronFactory->create()
-			->reviewSync();
+		$result = $this->_objectManager->create('Dotdigitalgroup\Email\Model\Cron')->reviewSync();
 
 		$this->messageManager->addSuccess($result['message']);
 
